@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome!</title>
+</head>
+<body>
+<tr th:each="faculty:${facultyList}">
+    <td><a th:href="@{'/api/faculty/'+${faculty.getId()}}" th:text="${faculty.getFaculty()}"></a></td></br>
+
+    <form th:if="${userObject.getRoles().getRoles()=='ADMIN'}" th:action="@{'/api/faculty/delete/'+${faculty.getId()}}"
+          method="post">
+        <div><input type="submit" value="Delete"></div>
+    </form>
+
+</tr>
+<form th:if="${userObject.getRoles().getRoles()=='ADMIN'}" action="/api/company/end"
+      method="post">
+    <div><input type="submit" value="Закончить компанию"></div>
+</form>
+<form th:if="${userObject.getRoles().getRoles()=='ADMIN'}" action="/api/company/requests"
+      method="get">
+    <div><input type="submit" value="Cписок заявок"></div>
+</form>
+</body>
+</html>

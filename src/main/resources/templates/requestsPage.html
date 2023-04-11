@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заявления</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отчество</td>
+        <td>Паспорт</td>
+        <td>Оценка</td>
+        <td>Специальность</td>
+    </tr>
+    <tr th:each="request:${requestList}">
+        <td th:text="${request.getApplicants().getName()}"></td>
+        <td th:text="${request.getApplicants().getPassport()}"></td>
+        <td th:text="${request.getScore()}"></td>
+        <td th:text="${request.getSpecialty().getSpecialtyName()}"></td>
+        <form action="api/company/deleteRequest" method="post">
+            <input type="hidden" th:value="${request.getId()}" name="id">
+            <button type="submit">Отклонить</button>
+        </form>
+        <form action="api/company/applyRequest" method="post">
+            <input type="hidden" th:value="${request}" name="request">
+            <button type="submit">Отклонить</button>
+        </form>
+
+    </tr>
+</table>
+
+
+</body>
+</html>

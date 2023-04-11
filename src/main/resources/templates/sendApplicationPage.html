@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>hi</p>
+<tr th:each="subject:${subjectList}">
+    <td th:text="${subject.getSubjects().getSubject()}"></td>
+</tr>
+<form action="/api/speciality/sendRequest" method="post">
+    <input type="number" name="firstSubject" value="">
+    <input type="number" name="secondSubject" value="">
+    <input type="number" name="thirdSubject" value="">
+    <input type="number" name="midlScore" value="">
+    <input type="hidden" name="specId" th:value="${specialityId}">
+    <button type="submit">Отправить</button>
+</form>
+</body>
+</html>

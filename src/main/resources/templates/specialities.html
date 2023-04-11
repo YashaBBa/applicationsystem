@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome!</title>
+</head>
+<body>
+<table>
+    <td>
+        <tr>Специальность</tr>
+        <tr>Оценка</tr>
+        <tr>Места</tr>
+        <tr>Льготные метса</tr>
+        <tr>Стоимость обучения</tr>
+        <tr>Конец приема заявок</tr>
+        <tr>Форма обучения</tr>
+
+    </td>
+
+
+    <tr th:if="${userObject.getRoles().getRoles()=='USER'}" th:each="speciality:${specialtiesList}">
+
+        <td><a th:href="@{'/api/speciality/'+${speciality.getId()}}"
+               th:text="${speciality.getSpecialty().getSpecialtyName()}"></a></td>
+        <td><p th:text="${speciality.getSpecialty().getMinimumScore()}"></p></td>
+        <td><p th:text="${speciality.getPrefPlaces()}"></p></td>
+        <td><p th:text="${speciality.getPlaces()}"></p></td>
+        <td><p th:text="${speciality.getCost()}"></p></td>
+        <td><p th:text="${speciality.getApplicationCampaign().getDeadlineDate()}"></p></td>
+        <td><p th:text="${speciality.getStudyFormat().getTitle()}"></p></td>
+
+
+        </br>
+
+
+    </tr>
+
+    <form th:if="${userObject.getRoles().getRoles()=='ADMIN'}" th:each="speciality:${specialtiesList}"
+          action="/api/speciality/update" method="post">
+        <br>
+        <input type="hidden" th:value="${speciality.getSpecialty().getId()}" name="specialty">
+        <input type="text" th:value="${speciality.getSpecialty().getSpecialtyName()}" name="specialtyName">
+        <input type="text" th:value="${speciality.getSpecialty().getMinimumScore()}" name="minimumScore">
+        <input type="hidden" th:value="${speciality.getId()}" name="specialityProperiesId">
+        <input type="text" th:value="${speciality.getPrefPlaces()}" name="prefPlaces">
+        <input type="text" th:value="${speciality.getPlaces()}" name="places">
+        <input type="text" th:value="${speciality.getCost()}" name="cost">
+        <input type="hidden" th:value="${speciality.getId()}" name="specialtyProperies">
+        <input type="hidden" name="faculty" th:value="${id}">
+        <select name="applicationCampaign">
+            <option th:each="compain:${compaingList}" th:value="${compain.getId()}"
+                    th:text="${compain.getDeadlineDate()}"></option>
+        </select>
+        <select name="studyFormat">
+            <option th:each="format:${studyFormatList}" th:value="${format.getId()}"
+                    th:text="${format.getTitle()}"></option>
+        </select>
+
+        <button type="submit">Обновить</button>
+
+    </form>
+    <br>
+    <a th:if="${userObject.getRoles().getRoles()=='ADMIN'}"
+       th:href="@{'/api/speciality/newSpeciality/'+${specialtiesList.get(0).getSpecialty().getFaculty().getId()}}">Создать
+        специальность</a>
+</table>
+</body>
+</html>

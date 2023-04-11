@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/api/speciality/createNew" method="post">
+    <p>Название</p>
+    <input type="text" name="specialtyName">
+    <p>Минимальный проходной</p>
+    <input type="number" name="minimumScore">
+
+    <input type="hidden" name="faculty" th:value="${id}">
+    <p>Льготные места</p>
+    <input type="number" name="prefPlaces" value="">
+    <p>Места</p>
+    <input type="number" name="places" value="">
+    <p>Стоимость</p>
+    <input type="number" name="cost" value="">
+
+    <select name="applicationCampaign">
+        <option th:each="compain:${compaingList}" th:value="${compain.getId()}" th:text="${compain.getDeadlineDate()}"></option>
+    </select>
+    <select name="studyFormat">
+        <option th:each="format:${studyFormatList}" th:value="${format.getId()}" th:text="${format.getTitle()}"></option>
+    </select>
+    <button type="submit">Создать</button>
+
+
+</form>
+
+</body>
+</html>
